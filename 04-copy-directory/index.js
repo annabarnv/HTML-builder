@@ -9,6 +9,7 @@ async function copyDir(srcPath, dstPath) {
     const files = await readdir(srcPath, {withFileTypes: true});
     for (let file of files) {
       if (file.isDirectory()) {
+        await mkdir(path.join(dstPath, file.name));
         copyDir(path.join(srcPath, file.name), path.join(dstPath, file.name));
       } else {
         await copyFile(path.join(srcPath, file.name), path.join(dstPath, file.name));
@@ -24,3 +25,5 @@ async function copyDir(srcPath, dstPath) {
   await mkdir(dstPath, {recursive: true});
   copyDir(srcPath, dstPath);
 }) ();
+
+
